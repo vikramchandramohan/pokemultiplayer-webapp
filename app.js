@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -8,7 +7,7 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 let latestData = {};
@@ -38,6 +37,8 @@ io.on('connection', (socket) => {
 });
 
 // Start the App
-server.listen(5000, () => {
-    console.log('App started on port 5000');
+const port = process.env.PORT || 5000;
+
+server.listen(port, () => {
+    console.log(`App started on port ${port}`);
 });
